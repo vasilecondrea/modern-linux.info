@@ -1,4 +1,4 @@
-***Intro**
+**Intro**
 
 This is a repo containing my notes and code snippets taken while reading *Learning Modern Linux* by M. Hausenblas.
 
