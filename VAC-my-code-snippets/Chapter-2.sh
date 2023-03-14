@@ -1,15 +1,19 @@
 echo "    
     this comand "lscpu" interacts with the BIOS to display info about the harware components and etc
+    lspcpu
 "
 lscpu
 
 echo "
-    demidecode command interacts with the BIOS - on my machine it says "permission denied"
+    command interacts with the BIOS - on my machine it says "permission denied"
+    dmidecode
+
 "
 dmidecode
 
 echo "
-    if you only want to see the architecture (x86_64 for me) do uname -m
+    if you only want to see the architecture (x86_64 for me) do 
+    uname -m
 "
 uname -m
 
@@ -33,11 +37,39 @@ echo "
 
 echo "
      A very useful tool to figure out memory-related information such as how much RAM is available to you is the /proc/meminfo interface.
-     how to list the ram size:   grep MemTotal /proc/meminfo (8GB)
-     how to see the size of the virtual memory (34TB)
+     how to list the ram size:   
+     grep MemTotal /proc/meminfo 
+
+     how to see the size of the virtual memory (34TB): grep VmallocTotal /proc/meminfo
+
      how to see huge pages information (2MB)
+     grep Huge /proc/meminfo
 "
 grep MemTotal /proc/meminfo
 grep VmallocTotal /proc/meminfo
 grep Huge /proc/meminfo
 
+echo "
+    overview of network interfaces with "ip link"
+    
+"
+ip link 
+
+echo "
+    routing information "ip route"
+"
+ip route
+
+echo " 
+    overview of the devices on your Linux system
+"
+ls -al /sys/devices/
+
+
+echo "
+    strace to look behind the curtain, a tool useful for troubleshooting, for example, if you don’t have the source code of an app but want to learn what it does.
+
+    strace ls, we ask strace to capture the syscall that ls uses.
+"
+
+strace ls
