@@ -1,4 +1,4 @@
-Topic: Users and controlling access to resources in general and files
+Topic: Users and controlling access to resources and files
 
 
     specifically
@@ -10,12 +10,27 @@ Topic: Users and controlling access to resources in general and files
     - capabilities, seccomp profiles, and ACLs.
     - security good practices
 
-    Linux: multiuser operating system 
+    Linux is a multiuser operating system 
     - Users launch process, own files (process: a file that the kernel has loaded into main memory and runs)
     - files - have owners, user creates a file, the file is owned by that user
     - process - use files for communication and persistency 
 
+    USERS - 2 types
+        **system users,** (system accounts) -- programs (sometimes called daemons) use these types of accounts to run background processes. they can be either part of the OS (ex, networking see sshd) or applications (mysql)
+        **regular users** human users interacting with the shell
+
+    Linux identifies users via a user ID (UID)
+
+        - a special kind of user with the UID 0, usually called **root** (no restrictions apply) - AVOID working as root (too much power,  a mistake can distroy the system)
     SANDBOXING: access to resources
+
+
+    UID 0                       root
+    UID 1 to 999                system users - programs of linux
+    UID 65534                   nobody ---    mapping remote users to some wellknown Id - (see network file system)
+    UID 1000 to 65533 and 65536 to 4294967294  regular users
+
+    to see what UID you have type **id -u**
 
     Types of access control: 
 
@@ -38,22 +53,25 @@ Topic: Users and controlling access to resources in general and files
     - Types of access: read, write, execute r-w-x
     - other type of access: 
             s - setuid/setid permission to an executable file
-            t - only for directories - prevents nonroot users from deleting files in it, unless user owns the file
+            t - only for directories - prevents non-root users from deleting files in it, unless user owns the file
 
 After doing "ls -all" in this file, first line is
--rw-rw-r-- 1 v_condrea v_condrea    137 Feb 10 14:43  _config.ym  
+-rw-rw-r-- 1 v_condrea v_condrea    137 Feb 10 14:43  _config.yml 
+
                                                        name of file
                                          last modified
+
                                    file size in bites
+
                         group it belog to
              file owner
-           no of hard links (1 here)
+           no. of hard links (1 here)
 
 the first section: 
 -   rw-    rw-   r-- 
-                perm for others
-           perm for group
-    permision for file owner
+                permission for others (only read)
+           permission for group (read and write)
+    permission for file owner (idem)
 type file (- means regular file, d means directory, l symbolic link, s socket, ? unknown file type)
  
  File permissions: 
@@ -67,6 +85,15 @@ type file (- means regular file, d means directory, l symbolic link, s socket, ?
  - 400 read only by its owner
 
  Change permission with *chmod* either with permission settings (eg. 644) or shortcut (+x this means 'make it executable)
+
+
+if I do:
+
+touch masktest # creates a file
+ls -al masktest # output : -rw-rw-r-- 1 v_condrea v_condrea 0 Mar 15 09:44 masktest (regular file, owner and group have rw privileges, others only read)
+chmod +x masktest # this makes the file excutable (you can run the file)
+ls -al masktest # output : -rwxrwxr-x 1 v_condrea v_condrea 0 Mar 15 09:44 masktest (regular file, owner and grou have rw and execute privileges; others read and execute)
+
 if I do:
 
 touch myfile
@@ -86,7 +113,7 @@ ROOT owns the file now.
                 
 
 
-capabilities:
+Capabilities:
 In Linux  the root user has no restrictions when running processes.  
 kernel only distinguishes between:
     -   Privileged processes, bypassing the kernel permission checks, with an effective UID of 0 (aka root)
