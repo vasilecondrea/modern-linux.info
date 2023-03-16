@@ -1,0 +1,6 @@
+[Unit]
+Description=My Greeting Service
+
+[Service]
+Type=oneshot
+ExecStart=/home/v_condrea/Downloads/Github - portofolio/modern-linux.info/greeter/greeter.sh

@@ -21,7 +21,7 @@ Topic: Users and controlling access to resources and files
 
     Linux identifies users via a user ID (UID)
 
-        - a special kind of user with the UID 0, usually called **root** (no restrictions apply) - AVOID working as root (too much power,  a mistake can distroy the system)
+        - a special kind of user with the UID 0, usually called **root** (no restrictions apply) - AVOID working as root (too much power,  a mistake can destroy the system)
     SANDBOXING: access to resources
 
 
@@ -37,11 +37,11 @@ Topic: Users and controlling access to resources and files
     - discretionary AC(DAC) - restrict access to resources based on the Id of the user. 
     - mandatory AC - users are given a security clearance = a user has access to a clearance level equal and lower to their own
 
-    TAHT IS: you are either a superuser who has the power to change everything or you are a normal user with limited access.
+    THAT IS: you are either a superuser who has the power to change everything or you are a normal user with limited access.
 
 
     Centralized User Management:
-    If you have more than one machine or server for which you have to manage users—  few approaches available to you:
+    If you have more than one machine or server for which you have to manage users —  few approaches available to you:
 
     - lightweight directory based access control - LDAP: you can use **Keycloak** or outsource to cloud **Azure Active Directroy**
     - via a network - see Kerberos
@@ -49,7 +49,7 @@ Topic: Users and controlling access to resources and files
 
 
     Persmissions: 
-    - File permission:  everything is a file in Linux, more or less - three permissoins: USER, GROUP (of users), OTHER (everyone else)
+    - File permission:  everything is a file in Linux, more or less - three permissions: USER, GROUP (of users), OTHER (everyone else)
     - Types of access: read, write, execute r-w-x
     - other type of access: 
             s - setuid/setid permission to an executable file
@@ -79,7 +79,8 @@ type file (- means regular file, d means directory, l symbolic link, s socket, ?
  rwx means read, write,execute
  
  Examples of permission by no. most relevant are 
- - 644 (r/w for owner, r for anybody else) a
+ - 644 (r/w for owner, r for anybody else)
+ - 750 make it excutable ($ chmod 750 greeter.sh mankes greeter.sh executable)
  - 755 full access for owner, r/e for the others
  - 700 full access for owner, none for others
  - 400 read only by its owner
@@ -92,11 +93,11 @@ if I do:
 touch masktest # creates a file
 ls -al masktest # output : -rw-rw-r-- 1 v_condrea v_condrea 0 Mar 15 09:44 masktest (regular file, owner and group have rw privileges, others only read)
 chmod +x masktest # this makes the file excutable (you can run the file)
-ls -al masktest # output : -rwxrwxr-x 1 v_condrea v_condrea 0 Mar 15 09:44 masktest (regular file, owner and grou have rw and execute privileges; others read and execute)
+ls -al masktest # output : -rwxrwxr-x 1 v_condrea v_condrea 0 Mar 15 09:44 masktest (regular file, owner and group have rw and execute privileges; others read and execute)
 
-if I do:
+Change owner of a file:
 
-touch myfile
+touch myfile 
 ls -al myfile
 
 then get
@@ -105,7 +106,7 @@ then get
 
 after 
 
-sudo chwon root myfile - this changes owner (chown; one can do chgrp - to chage group)
+sudo chwon root myfile - this changes owner (one can do chgrp - to chage group)
 
 -rw-rw-r-- 1 root v_condrea 0 Mar 14 10:22 myfile
 
