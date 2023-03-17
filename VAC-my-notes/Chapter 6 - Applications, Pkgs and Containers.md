@@ -55,7 +55,7 @@ from
 three primary options for package and dependency management
 
     - traditional pkg managers: 
-            packages with data and metadata, zipped; and tooling - package managers - these install/manage/uninstall/maintains apps. EX yum, Zypper, apt (debian deb)
+            packages with data and metadata, zipped; and tooling - package managers - these install/manage/uninstall/maintains apps. e.g. yum, Zypper, apt (debian deb)
             Language specific pkg manager: pip/PyPm (python), npm (node.js), c (Conan), go (go get, go mod), java (maven, nuts)
 
     - container-based solutions: 
@@ -63,7 +63,7 @@ three primary options for package and dependency management
             they’ve enjoyed mainstream adoption only due to Docker, starting in roughly 2014.
             Docker has a standardized way to define the packaging via container **images** and a human-friendly user interface (for example, docker run)
             NOW we also have OCI (open container initiative)
-            containers= immutability - once put together, a configuration cannot be changed. Change requires a NEW static congiration; and a new resources (processes) with it
+            containers= immutability - once put together, a configuration cannot be changed. Change requires a NEW static configuration; and a new resources (processes) with it
 
     - modern pkg managers
 
@@ -73,6 +73,7 @@ three primary options for package and dependency management
 # Another topic namespaces vs cgroups (control groups): 
     Linux namespaces - allow processes to have a local view on a resource (such as a filesystem, networking, or even users)             
                     - initially Linux had global view on resources
+
                     - three relevant syscalls at your disposal: 
                         **clone** (create a child process sharing execution context), 
                         **unshare** (remove a shared execution context from an existing process)
@@ -98,7 +99,7 @@ namespaces - cgroups    |                                   |
                         |                                   |
 app1, app 2, etc        | this is controlled by | Docker    |  CONTAINER    user DOES
                         |                       | daemon    |                       $ docker run
-kernek                  |                                   |                       $ docker build 
+kernel                  |                                   |                       $ docker build 
                                                                                             to a container image which sits in a Registry
 
 container image - compressed archive file with metadata and JSON files and the layers(directories) - Docker daemon pulls these images as needed from a registry
@@ -128,7 +129,8 @@ image       Manage container images                     Remove all unused images
 
 # Alternative to Docker - OCI container tooling
 again containers make it easy to work with namespaces and cgroups
-examepls: **containerd**, **skopeo**, **systemd-cgtop**, **nsenter**, '**lsns**, ***cinf*
+e.g.: **containerd**, **skopeo**, **systemd-cgtop**, **nsenter**, '**lsns**, ***cinf*
 
 
-# Modern package managers: snap, flatpack, AppImage, homebrew
+# Modern package managers: 
+snap, flatpack, AppImage, homebrew

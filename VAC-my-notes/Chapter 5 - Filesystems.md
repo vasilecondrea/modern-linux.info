@@ -2,13 +2,15 @@ Filesystems
 
 UNIX =  “everything is a file” --- most resources in Linux are indeed files.
 
-Even devices and pseudo devices are exposed as files (like echo "Hello modern Linux users" > /dev/pts/0, prints “Hello modern Linux users” to the screen, as if a file but it is not a proper file to read). Ex 2: kernel exposes a process like PID as if it was a file
+Even devices and pseudo devices are exposed as files 
+    Ex 1 echo "Hello modern Linux users" > /dev/pts/0, prints “Hello modern Linux users” to the screen, as if a file but it is not a proper file to read
+    Ex 2: kernel exposes a process like PID as if it was a file
 
 this makes it easy to learn linux: everything you do you can do as if it was file. 
 
 content: 
 relevant terms
-how Linux implements the “everything is a file” abstraction. N
+how Linux implements the “everything is a file” abstraction 
 review special-purpose filesystems the kernel uses to expose information about processes or devices. 
 regular files and filesystems, something you would typically associate with documents, data, and programs. 
 compare filesystem options and discuss common operations.
@@ -34,12 +36,15 @@ Inodes - in filesystems, inodes store metadata about files, such as size, owner,
 Command             Use case
 lsblk               List all block devices    DO lsblk --exclude 7 to exlude the loops
 fdisk, parted       Manage disk partitions
-blkid               Show block device attributes such as UUID
+blkid               Show block device attributes such as UUID (A UUID --
+                     Universal Unique Identifier is a 128-bit value used to uniquely identify an object or entity on the internet. )
+
 hwinfo              Show hardware information
 file -s             Show filesystem and partition information
 stat, df -i, ls -i  Show and list inode-related information 
 
-see "stat masktest"  look at individual filesys obj (files directories)
+
+see "stat masktest"  look at individual filesys objects (files directories)
 with "stat ."        the respective directory file information, including its inode, number of blocks used
 
     Another term: LINK (**hard link** [reference inodes] and **symbolic link** (file containing a string representing the path to another file))
@@ -55,9 +60,10 @@ with "stat ."        the respective directory file information, including its in
 
 
     ANOTHER TOPIC: 
-Virtual File System: a layer of indirection between the clients (syscalls) and the individual filesystems implementing operations for a concrete device or other kind of resource.
+**Virtual File System**: a layer of indirection between the clients (syscalls) and the individual filesystems implementing operations for a concrete device or other kind of resource.
 
 **VFS separates the generic operation (open, read, seek) from the actual implementation details.**
+
 VFS wrapps: 
     - local filesys (XFS, FAT, and NTFS), 
     - in-memory filesys (RAM), 
@@ -88,8 +94,8 @@ VFS wrapps:
 
        physical vol 1   physical vol 2    physical vol 3
 
-       type **hwinfo** to get info hardware
-       type **lvscan** to get info on volumes 
+       type $ hwinfo to get info hardware
+       type $ lvscan to get info on volumes 
 
 
        ANOTHER TOPIC: Filesystem Operations
@@ -101,16 +107,16 @@ VFS wrapps:
 
     Another topic: common filesystems
     you can see the concrete setup of a machine do
-    man hier
+    $ man hier
     you will get the man help menu explaining what each file contains 
 
 type of filesystems layouts:
 
     bin, sbin       System programs and commands (usually links to /usr/bin and /usr/sbin)
     boot            static files for the boot loader; Kernel images and related components
-    dev              Devices (terminals, drives, etc.)
+    dev             Devices (terminals, drives, etc.)
     etc             System configuration files
-    homeUser         home directories
+    homeUser        home directories
     lib             Shared system libraries
     mnt, media      Mount points for removable media (e.g., USB sticks)
     opt             Distro specific; can host package manager files
@@ -124,7 +130,7 @@ type of filesystems layouts:
 
 # Pseudo Filesystems
 
-- procfs (older from UNIX)
+- procfs (older fro UNIX)
 - sysfs (newer for Linux)
 - devices: devfs
 
@@ -136,6 +142,7 @@ type of filesystems layouts:
         
 Information that can be 
 ENTRY       type        Information
+
 attr        Directory   security attributes
 cgroup      File        Control groups
 cmdline     File        Command line
@@ -154,7 +161,8 @@ task        Directory   Per-task (thread) information
 timers      File        Timers information
 
 commands like the following can get some information from the above (current running command and IP, respectively)
-$ cat /proc/self/status | head -10
+
+$ cat /proc/self/status | head -10 # in this case the "cat" command itself
 $ cat /proc/self/net/arp
 
 **sysfs**
@@ -186,8 +194,7 @@ devices available via devfs:
 ex: docs, YAML,  JSON, (PNG, JPEG, etc.), source code, plain text files etc
 
 
-    2. common filesystem : filesystems that are either the defaults used in Linux distributions or widely
-used in storage devices
+    2. common filesystem : filesystems that are either the defaults used in Linux distributions or widely used in storage devices
 
 files systems: 
 "extended filesystem": ext2, ext3, 
@@ -207,9 +214,11 @@ and brtfs (supported since 2009) - b-tree fs (pronounced butterFS or betterFs) d
 Advantage    increase I/O speed and uses less space. 
 Means: 
         A. when File1 (containing blocs ABC) is copied to File2, File 2 will only contain the metadata pointing to the ABC blocks of File1.
+
         B. when block C of File2 is modified, then block C is copied to File2 and that C' of File2 will be a later changed version of bloc C (of File1). File2 still points and uses the unmodified blocks A and B from File1
 
 implementation - where it can be found: Unionfs, Overlayfs, AUFS, btrfs
 
 Relevant concept: **union mounts** - p. 111: "combine (mount) multiple directories into one location so that, to the user of the resulting directory, it appears that said directory contains the combined content (or: union) of all the participating directories."
+
 there will be an 'upper filesystem' and a "lower filesystem"
