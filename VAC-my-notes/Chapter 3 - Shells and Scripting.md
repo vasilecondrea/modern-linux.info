@@ -37,5 +37,5 @@ Variables - 2 types
 - variables valid in the context of the current shell (list them with "set" ); Shell variables are not inherited by subprocesses.
 
 
-CREATE an env variable by using "export"  to create an ACCESS an env variable use $ in front of it.
-DELETE an env variable use "unset"
+CREATE an env variable by using `export` to create an ACCESS an env variable use $ in front of it.
+DELETE an env variable use `unset`
